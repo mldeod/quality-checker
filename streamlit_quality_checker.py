@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """
-Leinco Quality Checker - Streamlit Web App
-Beautiful web-based quality validation tool
-No installation needed - runs in browser!
-
-Created by Deodata
+Quality Checker - Streamlit Web App
+Data quality validation tool
 """
 
 import streamlit as st
@@ -415,7 +412,6 @@ def generate_html_report(filename, checks, all_passed, total_rows, total_cols, c
     
     html += """
     </div>
-    <div class="footer-line">Created by Deodata</div>
 </body>
 </html>
 """
@@ -573,14 +569,6 @@ def main():
     
     else:
         st.info("Upload a CSV file to get started")
-    
-    # Footer
-    st.markdown("""
-    <div class="footer">
-        Created by Deodata<br>
-        Professional FP&A Solutions
-    </div>
-    """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":

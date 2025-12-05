@@ -98,9 +98,9 @@ For questions or issues, please open an issue in the GitHub repository.
 
 ## License
 
-© 2025 Deodata Analytics. All rights reserved.
+© 2025. All rights reserved.
 
-## About
+---
 
-Developed by Deodata, specialists in FP&A automation and Vena Solutions implementation.
+*Data quality validation tool for FP&A professionals*
 

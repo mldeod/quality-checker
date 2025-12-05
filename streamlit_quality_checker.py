@@ -18,24 +18,38 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS - Apple-style design!
+# Custom CSS - Apple-style design with dark mode support!
 st.markdown("""
 <style>
     /* Apple-style colors and fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
     
+    /* Light mode (default) */
     .main {
         background: #f5f5f7;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    /* Beautiful header ribbon */
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background: #1e1e1e;
+        }
+    }
+    
+    /* Beautiful header ribbon - adapts to theme */
     .header-ribbon {
         background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f7 100%);
         padding: 30px;
         border-radius: 0;
         margin: -70px -80px 30px -80px;
         text-align: center;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .header-ribbon {
+            background: linear-gradient(135deg, #1a3a4a 0%, #0d2a3a 100%);
+        }
     }
     
     .header-ribbon h1 {
@@ -46,13 +60,10 @@ st.markdown("""
         letter-spacing: -0.5px;
     }
     
-    /* Cards */
-    .stCard {
-        background: white;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        margin-bottom: 20px;
+    @media (prefers-color-scheme: dark) {
+        .header-ribbon h1 {
+            color: #a8c5d1;
+        }
     }
     
     /* Buttons */
@@ -73,7 +84,7 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(0,81,213,0.3);
     }
     
-    /* Success/Error boxes */
+    /* Success boxes - light mode */
     .success-box {
         background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
         color: #155724;
@@ -83,6 +94,16 @@ st.markdown("""
         margin: 20px 0;
     }
     
+    /* Success boxes - dark mode */
+    @media (prefers-color-scheme: dark) {
+        .success-box {
+            background: linear-gradient(135deg, #1a3d2a 0%, #0f2d1f 100%);
+            color: #7ddc8f;
+            border-left: 4px solid #34c759;
+        }
+    }
+    
+    /* Error boxes - light mode */
     .error-box {
         background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
         color: #721c24;
@@ -92,7 +113,16 @@ st.markdown("""
         margin: 20px 0;
     }
     
-    /* Results styling */
+    /* Error boxes - dark mode */
+    @media (prefers-color-scheme: dark) {
+        .error-box {
+            background: linear-gradient(135deg, #3d1a1f 0%, #2d0f15 100%);
+            color: #ff8a80;
+            border-left: 4px solid #ff3b30;
+        }
+    }
+    
+    /* Results styling - light mode */
     .check-result {
         background: #f9f9f9;
         padding: 16px;
@@ -104,9 +134,25 @@ st.markdown("""
         line-height: 1.6;
     }
     
+    /* Results styling - dark mode */
+    @media (prefers-color-scheme: dark) {
+        .check-result {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-left: 3px solid #4a4a4a;
+        }
+    }
+    
     .check-result.pass {
         border-left-color: #34c759;
         background: linear-gradient(135deg, #f0fdf4 0%, #e8f9ed 100%);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .check-result.pass {
+            background: linear-gradient(135deg, #1a3d2a 0%, #0f2d1f 100%);
+            color: #7ddc8f;
+        }
     }
     
     .check-result.fail {
@@ -114,13 +160,11 @@ st.markdown("""
         background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
     }
     
-    /* Footer */
-    .footer {
-        text-align: center;
-        color: #a1a1a6;
-        font-size: 11px;
-        margin-top: 40px;
-        padding: 20px;
+    @media (prefers-color-scheme: dark) {
+        .check-result.fail {
+            background: linear-gradient(135deg, #3d1a1f 0%, #2d0f15 100%);
+            color: #ff8a80;
+        }
     }
     
     /* Hide Streamlit branding */
@@ -336,18 +380,66 @@ def generate_html_report(filename, checks, all_passed, total_rows, total_cols, c
     <title>Quality Report - {filename}</title>
     <style>
         body {{ font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f7; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            body {{ background: #1e1e1e; color: #e0e0e0; }}
+        }}
+        
         .header-line {{ padding: 20px 40px; border-bottom: 1px solid #d2d2d7; background: white; text-align: left; color: #6e6e73; font-size: 11px; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .header-line {{ background: #2a2a2a; border-bottom: 1px solid #4a4a4a; color: #a8a8a8; }}
+        }}
+        
         .footer-line {{ padding: 20px 40px; border-top: 1px solid #d2d2d7; background: white; text-align: right; color: #6e6e73; font-size: 11px; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .footer-line {{ background: #2a2a2a; border-top: 1px solid #4a4a4a; color: #a8a8a8; }}
+        }}
+        
         .container {{ background: white; padding: 40px; margin: 0; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .container {{ background: #2a2a2a; }}
+        }}
+        
         h1 {{ color: #1d1d1f; font-size: 32px; font-weight: 400; margin: 30px 0 10px 0; letter-spacing: -0.5px; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            h1 {{ color: #e0e0e0; }}
+        }}
+        
         h2 {{ color: #1d1d1f; font-size: 22px; font-weight: 400; margin-top: 40px; margin-bottom: 16px; letter-spacing: -0.3px; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            h2 {{ color: #d0d0d0; }}
+        }}
+        
         .status {{ font-size: 20px; font-weight: 400; padding: 24px; margin: 24px 0; border-radius: 16px; text-align: center; }}
         .status.pass {{ background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; border: 1px solid #c3e6cb; }}
         .status.fail {{ background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; border: 1px solid #f5c6cb; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .status.pass {{ background: linear-gradient(135deg, #1a3d2a 0%, #0f2d1f 100%); color: #7ddc8f; border: 1px solid #34c759; }}
+            .status.fail {{ background: linear-gradient(135deg, #3d1a1f 0%, #2d0f15 100%); color: #ff8a80; border: 1px solid #ff3b30; }}
+        }}
+        
         .check {{ margin: 12px 0; padding: 16px 20px; background: #f5f5f7; border-radius: 12px; border-left: 4px solid #d2d2d7; font-size: 15px; line-height: 1.6; white-space: pre-wrap; }}
         .check.pass {{ border-left-color: #34c759; background: linear-gradient(135deg, #f0fdf4 0%, #e8f9ed 100%); }}
         .check.fail {{ border-left-color: #ff3b30; background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%); }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .check {{ background: #333333; color: #e0e0e0; border-left: 4px solid #4a4a4a; }}
+            .check.pass {{ background: linear-gradient(135deg, #1a3d2a 0%, #0f2d1f 100%); color: #7ddc8f; border-left-color: #34c759; }}
+            .check.fail {{ background: linear-gradient(135deg, #3d1a1f 0%, #2d0f15 100%); color: #ff8a80; border-left-color: #ff3b30; }}
+        }}
+        
         .info {{ background: linear-gradient(135deg, #e3f2fd 0%, #d0e8f7 100%); padding: 20px 24px; margin: 24px 0; border-radius: 12px; border: 1px solid #bbdefb; font-size: 14px; line-height: 1.8; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .info {{ background: linear-gradient(135deg, #1a2f3d 0%, #0d1f2a 100%); color: #a8c5d1; border: 1px solid #2a4a5a; }}
+        }}
+        
         table {{ width: 100%; border-collapse: separate; border-spacing: 0; margin: 24px 0; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
         th, td {{ padding: 14px 16px; text-align: left; word-wrap: break-word; }}
         td {{ max-width: 600px; white-space: normal; }}
@@ -355,9 +447,20 @@ def generate_html_report(filename, checks, all_passed, total_rows, total_cols, c
         td {{ border-bottom: 1px solid #f0f0f0; background: white; }}
         tbody tr:last-child td {{ border-bottom: none; }}
         tbody tr:hover td {{ background: #f9f9f9; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            th {{ background: linear-gradient(135deg, #2c2c2e 0%, #1d1d1f 100%); }}
+            td {{ border-bottom: 1px solid #3a3a3a; background: #2a2a2a; color: #e0e0e0; }}
+            tbody tr:hover td {{ background: #333333; }}
+        }}
+        
         .error-table th {{ background: linear-gradient(135deg, #ff3b30 0%, #e63329 100%); }}
         .warning-table th {{ background: linear-gradient(135deg, #ff9500 0%, #e88400 100%); color: white; }}
         .warning-box {{ background: linear-gradient(135deg, #fff9e6 0%, #fff3d0 100%); padding: 20px 24px; margin: 24px 0; border-radius: 12px; border: 1px solid #ffecb3; font-size: 14px; line-height: 1.8; color: #8b6914; }}
+        
+        @media (prefers-color-scheme: dark) {{
+            .warning-box {{ background: linear-gradient(135deg, #3d3520 0%, #2d2510 100%); color: #ffd580; border: 1px solid #665520; }}
+        }}
     </style>
 </head>
 <body>
